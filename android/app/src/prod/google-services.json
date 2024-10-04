@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "891112504087",
+    "project_id": "erika-precifica",
+    "storage_bucket": "erika-precifica.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:891112504087:android:5f6131db4a3a6d60f21552",
+        "android_client_info": {
+          "package_name": "br.com.erikaprecifica.precifikapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjsdBoFxjBpZQ7Fjb4GdiqJmp2XJvaBYk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:891112504087:android:193c74fd6ba8d1bdf21552",
+        "android_client_info": {
+          "package_name": "br.com.erikaprecifica.precifikapp.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjsdBoFxjBpZQ7Fjb4GdiqJmp2XJvaBYk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:891112504087:android:8de1d6cb8a20f4f2f21552",
+        "android_client_info": {
+          "package_name": "com.erikaprecifica.erikaprecifica.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjsdBoFxjBpZQ7Fjb4GdiqJmp2XJvaBYk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

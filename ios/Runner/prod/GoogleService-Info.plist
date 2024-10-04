@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyCzSaL6-pDq5BTcZLFB-70o-daW6_j6BSw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>891112504087</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>br.com.erikaprecifica.precifikapp</string>
+	<key>PROJECT_ID</key>
+	<string>erika-precifica</string>
+	<key>STORAGE_BUCKET</key>
+	<string>erika-precifica.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:891112504087:ios:f6be7af317e8800af21552</string>
+</dict>
+</plist>
