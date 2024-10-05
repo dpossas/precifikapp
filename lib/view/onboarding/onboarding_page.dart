@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/consts/app_colors.dart';
 import '../../core/consts/app_icons.dart';
@@ -29,10 +30,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
     super.initState();
   }
 
-  void toLogin() => Navigator.pushNamedAndRemoveUntil(
-        context,
+  void toLogin() => context.go(
         AuthRoutes.auth,
-        (route) => false,
       );
 
   @override
@@ -223,7 +222,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.c23262F,
                                 letterSpacing: -0.3,
-                                fontFamily: 'WorkSans',
                               ),
                       textAlign: TextAlign.center,
                     ),
@@ -237,7 +235,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               fontWeight: FontWeight.w400,
                               color: AppColors.c4F5159,
                               letterSpacing: -0.2,
-                              fontFamily: 'WorkSans',
                             ),
                         textAlign: TextAlign.center,
                       ),
@@ -325,7 +322,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.c23262F,
                                 letterSpacing: -0.3,
-                                fontFamily: 'WorkSans',
                               ),
                       textAlign: TextAlign.center,
                     ),
@@ -339,7 +335,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               fontWeight: FontWeight.w400,
                               color: AppColors.c4F5159,
                               letterSpacing: -0.2,
-                              fontFamily: 'WorkSans',
                             ),
                         textAlign: TextAlign.center,
                       ),
@@ -419,7 +414,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.c23262F,
                                 letterSpacing: -0.3,
-                                fontFamily: 'WorkSans',
                               ),
                       textAlign: TextAlign.center,
                     ),
@@ -433,7 +427,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               fontWeight: FontWeight.w400,
                               color: AppColors.c4F5159,
                               letterSpacing: -0.2,
-                              fontFamily: 'WorkSans',
                             ),
                         textAlign: TextAlign.center,
                       ),

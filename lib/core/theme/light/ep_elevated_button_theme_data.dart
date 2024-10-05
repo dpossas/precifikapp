@@ -6,6 +6,17 @@ class EpElevatedButtonThemeData {
   static ElevatedButtonThemeData themeData = const ElevatedButtonThemeData(
     style: ButtonStyle(
       backgroundColor: WidgetStatePropertyAll(AppColors.primary250),
+      shape: WidgetStatePropertyAll(
+        RoundedRectangleBorder(
+          side: BorderSide(
+            width: 1,
+            color: AppColors.primary250,
+          ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(60),
+          ),
+        ),
+      ),
       elevation: WidgetStatePropertyAll(0),
       textStyle: WidgetStatePropertyAll(
         TextStyle(
