@@ -1,10 +1,14 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:precificapp/core/consts/app_colors.dart';
 import 'package:precificapp/core/extensions/build_context_ext.dart';
+import 'package:precificapp/view/auth/biometric_permission.dart';
 import 'package:precificapp/view/auth/components/ep_icon.dart';
 import 'package:precificapp/view/components/ep_label.dart';
 
 import '../../core/consts/app_icons.dart';
+import '../../services/navigator_service.dart';
 import 'components/ep_app_bar.dart';
 
 class AuthPage extends StatefulWidget {
@@ -23,112 +27,135 @@ class _AuthPageState extends State<AuthPage> {
     });
   }
 
+  void showBiometricConsent() {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) => BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+        child: const Dialog(
+          child: BiometricPermission(),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const EpAppBar(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Form(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return Theme(
+      data: Theme.of(NavigatorService.context).copyWith(
+        dividerTheme: const DividerThemeData(
+          color: Colors.transparent,
+        ),
+      ),
+      child: Scaffold(
+        appBar: const EpAppBar(),
+        persistentFooterButtons: [
+          TextButton(
+            onPressed: () {},
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                verticalDivider12,
-                verticalDivider12,
-                const EPLabel('E-mail'),
-                TextFormField(
-                  decoration:
-                      const InputDecoration(hintText: 'Insira seu e-mail'),
+                EPIcon(
+                  context.icon(OutlineIcons.annotation),
+                  color: AppColors.cF12838,
                 ),
-                verticalDivider12,
-                const EPLabel('Senha'),
-                TextFormField(
-                  obscureText: obscureText,
-                  decoration: InputDecoration(
-                    hintText: 'Insira sua senha',
-                    suffixIcon: Padding(
-                      padding: const EdgeInsets.only(right: 16),
-                      child: InkWell(
-                        onTap: changeObscureText,
-                        child: EPIcon(
-                          context.icon(
-                            obscureText
-                                ? OutlineIcons.eye
-                                : OutlineIcons.eyeOff,
+                horizontalDivider12,
+                const Text('Precisa de ajuda?'),
+              ],
+            ),
+          ),
+          verticalDivider12,
+          SizedBox(
+            width: double.maxFinite,
+            height: 58,
+            child: ElevatedButton.icon(
+              onPressed: showBiometricConsent,
+              icon: EPIcon(
+                context.icon(OutlineIcons.arrowNarrowRight),
+                color: Colors.white,
+              ),
+              iconAlignment: IconAlignment.end,
+              label: const Text('Entrar'),
+            ),
+          ),
+          verticalDivider12,
+          SizedBox(
+            width: double.maxFinite,
+            height: 58,
+            child: ElevatedButton.icon(
+              style: const ButtonStyle(
+                backgroundColor: WidgetStatePropertyAll(
+                  Colors.white,
+                ),
+              ),
+              onPressed: () {},
+              icon: EPIcon(
+                context.icon(OutlineIcons.mail),
+                color: AppColors.primary250,
+              ),
+              iconAlignment: IconAlignment.end,
+              label: const Text(
+                'Criar uma nova conta',
+                style: TextStyle(
+                  color: AppColors.primary250,
+                ),
+              ),
+            ),
+          ),
+          verticalDivider12,
+        ],
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Form(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  verticalDivider12,
+                  verticalDivider12,
+                  const EPLabel('E-mail'),
+                  TextFormField(
+                    decoration:
+                        const InputDecoration(hintText: 'Insira seu e-mail'),
+                  ),
+                  verticalDivider12,
+                  const EPLabel('Senha'),
+                  TextFormField(
+                    obscureText: obscureText,
+                    decoration: InputDecoration(
+                      hintText: 'Insira sua senha',
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.only(right: 16),
+                        child: InkWell(
+                          onTap: changeObscureText,
+                          child: EPIcon(
+                            context.icon(
+                              obscureText
+                                  ? OutlineIcons.eye
+                                  : OutlineIcons.eyeOff,
+                            ),
+                            color: AppColors.c4F5159,
                           ),
-                          color: AppColors.c4F5159,
                         ),
                       ),
-                    ),
-                    suffixIconConstraints: BoxConstraints.tight(
-                      const Size(40.0, 24.0),
-                    ),
-                  ),
-                ),
-                verticalDivider12,
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {},
-                    child: const Text('Esqueceu sua senha?'),
-                  ),
-                ),
-                verticalDivider12,
-                verticalDivider12,
-                TextButton(
-                  onPressed: () {},
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      EPIcon(
-                        context.icon(OutlineIcons.annotation),
-                        color: AppColors.cF12838,
-                      ),
-                      horizontalDivider12,
-                      const Text('Precisa de ajuda?'),
-                    ],
-                  ),
-                ),
-                verticalDivider12,
-                SizedBox(
-                  width: double.maxFinite,
-                  height: 58,
-                  child: ElevatedButton.icon(
-                    onPressed: () {},
-                    icon: EPIcon(
-                      context.icon(OutlineIcons.arrowNarrowRight),
-                      color: Colors.white,
-                    ),
-                    iconAlignment: IconAlignment.end,
-                    label: const Text('Entrar'),
-                  ),
-                ),
-                verticalDivider12,
-                SizedBox(
-                  width: double.maxFinite,
-                  height: 58,
-                  child: ElevatedButton.icon(
-                    style: const ButtonStyle(
-                      backgroundColor: WidgetStatePropertyAll(
-                        Colors.white,
-                      ),
-                    ),
-                    onPressed: () {},
-                    icon: EPIcon(
-                      context.icon(OutlineIcons.mail),
-                      color: AppColors.primary250,
-                    ),
-                    iconAlignment: IconAlignment.end,
-                    label: const Text(
-                      'Criar uma nova conta',
-                      style: TextStyle(
-                        color: AppColors.primary250,
+                      suffixIconConstraints: BoxConstraints.tight(
+                        const Size(40.0, 24.0),
                       ),
                     ),
                   ),
-                ),
-              ],
+                  verticalDivider12,
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {},
+                      child: const Text('Esqueceu sua senha?'),
+                    ),
+                  ),
+                  verticalDivider12,
+                  verticalDivider12,
+                ],
+              ),
             ),
           ),
         ),
