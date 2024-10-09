@@ -6,8 +6,18 @@ import 'core/routes/routes.dart';
 import 'core/theme/theme.dart';
 import 'flavors.dart';
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   const App({super.key});
+
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  final goRouter = GoRouter(
+    navigatorKey: NavigatorService.navigatorKey,
+    routes: Routes.allRoutes,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +25,7 @@ class App extends StatelessWidget {
       title: F.title,
       theme: EPTheme.theme,
       debugShowCheckedModeBanner: false,
-      routerConfig: GoRouter(
-        navigatorKey: NavigatorService.navigatorKey,
-        routes: Routes.allRotues,
-      ),
+      routerConfig: goRouter,
     );
   }
 }

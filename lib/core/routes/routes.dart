@@ -1,10 +1,15 @@
 import 'package:go_router/go_router.dart';
-import 'package:precificapp/core/routes/auth/routes.dart';
-import 'package:precificapp/core/routes/onboarding/routes.dart';
+
+import 'auth/routes.dart';
+import 'change_password/routes.dart';
+import 'onboarding/routes.dart';
+import 'recover_password/routes.dart';
 
 class Routes {
-  static List<RouteBase> get allRotues => [
+  static List<RouteBase> get allRoutes => [
         ...OnboardingRoutes.routes,
         ...AuthRoutes.routes,
+        ...RecoverPasswordRoutes.routes,
+        ...ChangePasswordRoutes.routes,
       ];
 }

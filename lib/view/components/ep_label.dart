@@ -5,8 +5,15 @@ import '../../services/navigator_service.dart';
 
 class EPLabel extends StatelessWidget {
   final String labelText;
+  final Color? textColor;
+  final FontWeight? fontWeight;
 
-  const EPLabel(this.labelText, {super.key});
+  const EPLabel(
+    this.labelText, {
+    super.key,
+    this.textColor,
+    this.fontWeight,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +23,9 @@ class EPLabel extends StatelessWidget {
         labelText,
         style:
             Theme.of(NavigatorService.context).textTheme.labelLarge?.copyWith(
-                  color: AppColors.secondary500,
+                  color: textColor ?? AppColors.secondary500,
                   height: 1.6,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: fontWeight ?? FontWeight.w700,
                   fontFamily: 'PlusJakartaSans',
                 ),
       ),

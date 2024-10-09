@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:precificapp/core/extensions/build_context_ext.dart';
-import 'package:precificapp/view/auth/components/ep_icon.dart';
+import 'package:precificapp/view/components/ep_icon.dart';
 
 import '../../../core/consts/app_colors.dart';
 import '../../../core/consts/app_icons.dart';

@@ -1,33 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:precificapp/core/routes/auth/routes.dart';
 
 import '../../core/consts/app_colors.dart';
 import '../../core/consts/app_icons.dart';
 import '../../core/extensions/build_context_ext.dart';
-import '../../services/navigator_service.dart';
+import '../../core/routes/auth/routes.dart';
 import '../components/ep_icon.dart';
 
-class BiometricPermission extends StatelessWidget {
-  const BiometricPermission({super.key});
+class ChangePasswordSuccess extends StatelessWidget {
+  const ChangePasswordSuccess({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(24),
-      height: 380,
+      height: 330,
       child: Column(
         children: [
           EPIcon(
-            context.icon(OutlineIcons.faceId),
+            context.icon(OutlineIcons.badgeCheck),
             width: 58,
             height: 58,
-            color: AppColors.c979797,
           ),
           verticalDivider12,
           verticalDivider12,
           Text(
-            'Ativar biometria?',
+            'Senha alterada com sucesso!',
             style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                   color: AppColors.c23262F,
                   fontWeight: FontWeight.w600,
@@ -36,7 +34,7 @@ class BiometricPermission extends StatelessWidget {
           ),
           verticalDivider12,
           Text(
-            'Deseja ativar a biometria nos próximos acessos em sua conta?',
+            'Entre na tela de login novamente e acesse sua conta com a sua nova senha',
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: AppColors.c4F5159,
                   fontWeight: FontWeight.normal,
@@ -52,30 +50,9 @@ class BiometricPermission extends StatelessWidget {
             height: 58,
             child: ElevatedButton(
               onPressed: () {
-                context.go(AuthRoutes.loggedAccountChoose);
+                context.go(AuthRoutes.auth);
               },
-              child: const Text('Ativar biometria'),
-            ),
-          ),
-          verticalDivider12,
-          SizedBox(
-            width: double.maxFinite,
-            height: 58,
-            child: ElevatedButton(
-              style: const ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(
-                  Colors.white,
-                ),
-              ),
-              onPressed: () {
-                context.pop(NavigatorService.context);
-              },
-              child: const Text(
-                'Não ativar',
-                style: TextStyle(
-                  color: AppColors.primary250,
-                ),
-              ),
+              child: const Text('Ok'),
             ),
           ),
         ],

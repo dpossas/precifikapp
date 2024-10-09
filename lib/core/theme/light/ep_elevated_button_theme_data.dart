@@ -3,29 +3,38 @@ import 'package:flutter/material.dart';
 import '../../consts/app_colors.dart';
 
 class EpElevatedButtonThemeData {
-  static ElevatedButtonThemeData themeData = const ElevatedButtonThemeData(
+  static ElevatedButtonThemeData themeData = ElevatedButtonThemeData(
     style: ButtonStyle(
-      backgroundColor: WidgetStatePropertyAll(AppColors.primary250),
-      shape: WidgetStatePropertyAll(
-        RoundedRectangleBorder(
-          side: BorderSide(
-            width: 1,
-            color: AppColors.primary250,
-          ),
-          borderRadius: BorderRadius.all(
-            Radius.circular(60),
-          ),
-        ),
+      backgroundColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.disabled)) {
+          return AppColors.cE6E6E6;
+        }
+        return AppColors.primary250;
+      }),
+      shape: WidgetStateProperty.resolveWith(
+        (states) {
+          return RoundedRectangleBorder(
+            side: BorderSide(
+              width: 1,
+              color: states.contains(WidgetState.disabled)
+                  ? AppColors.cE6E6E6
+                  : AppColors.primary250,
+            ),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(60),
+            ),
+          );
+        },
       ),
-      elevation: WidgetStatePropertyAll(0),
-      textStyle: WidgetStatePropertyAll(
+      elevation: const WidgetStatePropertyAll(0),
+      textStyle: const WidgetStatePropertyAll(
         TextStyle(
           color: Colors.white,
           fontFamily: 'WorkSans',
           fontWeight: FontWeight.bold,
         ),
       ),
-      foregroundColor: WidgetStatePropertyAll(Colors.white),
+      foregroundColor: const WidgetStatePropertyAll(Colors.white),
     ),
   );
 }

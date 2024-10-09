@@ -1,14 +1,15 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:precificapp/core/consts/app_colors.dart';
-import 'package:precificapp/core/extensions/build_context_ext.dart';
-import 'package:precificapp/view/auth/biometric_permission.dart';
-import 'package:precificapp/view/auth/components/ep_icon.dart';
-import 'package:precificapp/view/components/ep_label.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../core/consts/app_colors.dart';
 import '../../core/consts/app_icons.dart';
+import '../../core/extensions/build_context_ext.dart';
+import '../../core/routes/recover_password/routes.dart';
 import '../../services/navigator_service.dart';
+import '../components/ep_blur_modal.dart';
+import '../components/ep_icon.dart';
+import '../components/ep_label.dart';
+import 'biometric_permission.dart';
 import 'components/ep_app_bar.dart';
 
 class AuthPage extends StatefulWidget {
@@ -31,11 +32,8 @@ class _AuthPageState extends State<AuthPage> {
     showDialog(
       barrierDismissible: false,
       context: context,
-      builder: (context) => BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
-        child: const Dialog(
-          child: BiometricPermission(),
-        ),
+      builder: (context) => const EPBlurModal(
+        child: BiometricPermission(),
       ),
     );
   }
@@ -148,7 +146,9 @@ class _AuthPageState extends State<AuthPage> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.go(RecoverPasswordRoutes.recoverPassword);
+                      },
                       child: const Text('Esqueceu sua senha?'),
                     ),
                   ),

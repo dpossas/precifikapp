@@ -1,16 +1,15 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:precificapp/core/consts/app_colors.dart';
-import 'package:precificapp/core/extensions/build_context_ext.dart';
-import 'package:precificapp/services/navigator_service.dart';
-import 'package:precificapp/view/auth/biometric_permission.dart';
-import 'package:precificapp/view/auth/components/ep_icon.dart';
-import 'package:precificapp/view/auth/components/logged_account_component.dart';
-import 'package:precificapp/view/components/ep_label.dart';
 
+import '../../core/consts/app_colors.dart';
 import '../../core/consts/app_icons.dart';
+import '../../core/extensions/build_context_ext.dart';
+import '../../services/navigator_service.dart';
+import '../components/ep_icon.dart';
+import 'biometric_permission.dart';
 import 'components/ep_app_bar.dart';
+import 'components/logged_account_component.dart';
 
 class LoggedAccountPage extends StatefulWidget {
   const LoggedAccountPage({super.key});
