@@ -6,6 +6,7 @@ class EPIcon extends StatelessWidget {
   final Color? color;
   final double? width;
   final double? height;
+  final int? quarterTurns;
 
   const EPIcon(
     this.path, {
@@ -13,16 +14,20 @@ class EPIcon extends StatelessWidget {
     this.color,
     this.width = 24,
     this.height = 24,
+    this.quarterTurns,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SvgPicture.asset(
-      path,
-      colorFilter:
-          color != null ? ColorFilter.mode(color!, BlendMode.srcIn) : null,
-      width: width,
-      height: height,
+    return RotatedBox(
+      quarterTurns: quarterTurns ?? 0,
+      child: SvgPicture.asset(
+        path,
+        colorFilter:
+            color != null ? ColorFilter.mode(color!, BlendMode.srcIn) : null,
+        width: width,
+        height: height,
+      ),
     );
   }
 }

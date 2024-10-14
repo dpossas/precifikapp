@@ -30,7 +30,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     super.initState();
   }
 
-  void toLogin() => context.go(
+  void toLogin() => context.push(
         AuthRoutes.auth,
       );
 

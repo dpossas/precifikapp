@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:precificapp/core/validators/password_validator.dart';
 
 import '../../core/consts/app_colors.dart';
 import '../../core/consts/app_icons.dart';
 import '../../core/extensions/build_context_ext.dart';
+import '../../core/validators/password_validator.dart';
 import '../../services/navigator_service.dart';
 import '../components/ep_blur_modal.dart';
 import '../components/ep_icon.dart';
-import '../components/ep_label.dart';
+import '../components/password_form.dart';
 import 'change_password_success.dart';
 import 'components/change_password_app_bar.dart';
 
@@ -23,15 +23,6 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   final _passwordConfirmationController = TextEditingController();
 
   final _passwordValidator = PasswordValidator();
-
-  bool passwordIsValid = false;
-  bool obscureText = true;
-
-  void changeObscureText() {
-    setState(() {
-      obscureText = !obscureText;
-    });
-  }
 
   void showChangePasswordSuccess() {
     showDialog(
@@ -98,156 +89,15 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 children: [
                   verticalDivider12,
                   verticalDivider12,
-                  const EPLabel('Nova'),
-                  TextFormField(
-                    obscureText: obscureText,
-                    decoration: InputDecoration(
-                      hintText: 'Insira sua nova senha',
-                      suffixIcon: Padding(
-                        padding: const EdgeInsets.only(right: 16),
-                        child: InkWell(
-                          onTap: changeObscureText,
-                          child: EPIcon(
-                            context.icon(
-                              obscureText
-                                  ? OutlineIcons.eye
-                                  : OutlineIcons.eyeOff,
-                            ),
-                            color: AppColors.c4F5159,
-                          ),
-                        ),
-                      ),
-                      suffixIconConstraints: BoxConstraints.tight(
-                        const Size(40.0, 24.0),
-                      ),
-                    ),
-                    controller: _passwordController,
-                    onChanged: (value) {
-                      setState(() {
-                        _passwordValidator.validate(value);
-                        passwordIsValid = false;
-                      });
+                  PasswordForm(
+                    passwordController: _passwordController,
+                    passwordConfirmationController:
+                        _passwordConfirmationController,
+                    passwordValidator: _passwordValidator,
+                    onValidate: () {
+                      setState(() {});
                     },
-                  ),
-                  verticalDivider12,
-                  const EPLabel(
-                    'Sua senha deve conter no mínimo:',
-                    textColor: AppColors.neutral250,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  Row(
-                    children: [
-                      EPIcon(
-                        context.icon(_passwordController.text.isEmpty ||
-                                !_passwordValidator.hasUpercaseChar()
-                            ? OutlineIcons.minusCircle
-                            : OutlineIcons.checkCircle),
-                        color: _passwordController.text.isEmpty
-                            ? AppColors.neutral250
-                            : (_passwordValidator.hasUpercaseChar()
-                                ? AppColors.c0D964C
-                                : AppColors.cF12838),
-                      ),
-                      horizontalDivider12,
-                      Text(
-                        '1 caractere maiúsculo',
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              color: _passwordController.text.isEmpty
-                                  ? AppColors.neutral250
-                                  : (_passwordValidator.hasUpercaseChar()
-                                      ? AppColors.c0D964C
-                                      : AppColors.cF12838),
-                              fontWeight: FontWeight.normal,
-                            ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      EPIcon(
-                        context.icon(_passwordController.text.isEmpty ||
-                                !_passwordValidator.hasNumber()
-                            ? OutlineIcons.minusCircle
-                            : OutlineIcons.checkCircle),
-                        color: _passwordController.text.isEmpty
-                            ? AppColors.neutral250
-                            : (_passwordValidator.hasNumber()
-                                ? AppColors.c0D964C
-                                : AppColors.cF12838),
-                      ),
-                      horizontalDivider12,
-                      Text(
-                        '1 número',
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              color: _passwordController.text.isEmpty
-                                  ? AppColors.neutral250
-                                  : (_passwordValidator.hasNumber()
-                                      ? AppColors.c0D964C
-                                      : AppColors.cF12838),
-                              fontWeight: FontWeight.normal,
-                            ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      EPIcon(
-                        context.icon(_passwordController.text.isEmpty ||
-                                !_passwordValidator.hasSpecialChar()
-                            ? OutlineIcons.minusCircle
-                            : OutlineIcons.checkCircle),
-                        color: _passwordController.text.isEmpty
-                            ? AppColors.neutral250
-                            : (_passwordValidator.hasSpecialChar()
-                                ? AppColors.c0D964C
-                                : AppColors.cF12838),
-                      ),
-                      horizontalDivider12,
-                      Text(
-                        r'1 símbolo. Ex: ! @ # $ % & * + - / : ; = ? \ |',
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              color: _passwordController.text.isEmpty
-                                  ? AppColors.neutral250
-                                  : (_passwordValidator.hasSpecialChar()
-                                      ? AppColors.c0D964C
-                                      : AppColors.cF12838),
-                              fontWeight: FontWeight.normal,
-                            ),
-                      )
-                    ],
-                  ),
-                  verticalDivider12,
-                  const EPLabel('Confirmar nova senha'),
-                  TextFormField(
-                    obscureText: obscureText,
-                    decoration: InputDecoration(
-                      hintText: 'Confirme sua nova senha',
-                      suffixIcon: Padding(
-                        padding: const EdgeInsets.only(right: 16),
-                        child: InkWell(
-                          onTap: changeObscureText,
-                          child: EPIcon(
-                            context.icon(
-                              obscureText
-                                  ? OutlineIcons.eye
-                                  : OutlineIcons.eyeOff,
-                            ),
-                            color: AppColors.c4F5159,
-                          ),
-                        ),
-                      ),
-                      suffixIconConstraints: BoxConstraints.tight(
-                        const Size(40.0, 24.0),
-                      ),
-                    ),
-                    controller: _passwordConfirmationController,
-                    onChanged: (value) {
-                      setState(() {
-                        passwordIsValid = _passwordController.text ==
-                            _passwordConfirmationController.text;
-                      });
-                    },
-                  ),
+                  )
                 ],
               ),
             ),
@@ -258,6 +108,5 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   }
 
   final verticalDivider12 = const SizedBox(height: 12);
-
   final horizontalDivider12 = const SizedBox(width: 12);
 }

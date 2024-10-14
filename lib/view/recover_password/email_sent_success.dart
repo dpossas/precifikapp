@@ -50,7 +50,7 @@ class EmailSentSuccess extends StatelessWidget {
             height: 58,
             child: ElevatedButton(
               onPressed: () {
-                context.go(ChangePasswordRoutes.changePassword);
+                context.push(ChangePasswordRoutes.changePassword);
               },
               child: const Text('Ok'),
             ),

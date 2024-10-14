@@ -52,7 +52,7 @@ class BiometricPermission extends StatelessWidget {
             height: 58,
             child: ElevatedButton(
               onPressed: () {
-                context.go(AuthRoutes.loggedAccountChoose);
+                context.push(AuthRoutes.loggedAccountChoose);
               },
               child: const Text('Ativar biometria'),
             ),

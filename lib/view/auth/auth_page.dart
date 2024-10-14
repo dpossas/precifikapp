@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/consts/app_colors.dart';
 import '../../core/consts/app_icons.dart';
 import '../../core/extensions/build_context_ext.dart';
+import '../../core/routes/create_account/routes.dart';
 import '../../core/routes/recover_password/routes.dart';
 import '../../services/navigator_service.dart';
 import '../components/ep_blur_modal.dart';
@@ -87,7 +88,7 @@ class _AuthPageState extends State<AuthPage> {
                   Colors.white,
                 ),
               ),
-              onPressed: () {},
+              onPressed: () => context.push(CreateAccountRoutes.createAccount),
               icon: EPIcon(
                 context.icon(OutlineIcons.mail),
                 color: AppColors.primary250,
@@ -147,7 +148,7 @@ class _AuthPageState extends State<AuthPage> {
                     alignment: Alignment.centerRight,
                     child: TextButton(
                       onPressed: () {
-                        context.go(RecoverPasswordRoutes.recoverPassword);
+                        context.push(RecoverPasswordRoutes.recoverPassword);
                       },
                       child: const Text('Esqueceu sua senha?'),
                     ),

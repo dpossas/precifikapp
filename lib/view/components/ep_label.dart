@@ -25,7 +25,7 @@ class EPLabel extends StatelessWidget {
             Theme.of(NavigatorService.context).textTheme.labelLarge?.copyWith(
                   color: textColor ?? AppColors.secondary500,
                   height: 1.6,
-                  fontWeight: fontWeight ?? FontWeight.w700,
+                  fontWeight: fontWeight ?? FontWeight.w600,
                   fontFamily: 'PlusJakartaSans',
                 ),
       ),

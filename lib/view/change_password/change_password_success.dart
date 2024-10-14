@@ -50,7 +50,7 @@ class ChangePasswordSuccess extends StatelessWidget {
             height: 58,
             child: ElevatedButton(
               onPressed: () {
-                context.go(AuthRoutes.auth);
+                context.push(AuthRoutes.auth);
               },
               child: const Text('Ok'),
             ),
