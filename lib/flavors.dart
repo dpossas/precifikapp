@@ -5,6 +5,7 @@ enum Flavor {
 
 class F {
   static Flavor? appFlavor;
+  static String? appVersion;
 
   static String get name => appFlavor?.name ?? '';
 
@@ -19,4 +20,13 @@ class F {
     }
   }
 
+  static String get baseUrl {
+    switch (appFlavor) {
+      case Flavor.dev:
+        return 'http://vmi2073903.contaboserver.net/';
+      case Flavor.prod:
+      default:
+        return 'https://erikaprecifica.com.br/';
+    }
+  }
 }

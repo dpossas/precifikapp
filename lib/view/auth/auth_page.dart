@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:precificapp/controller/auth_controller.dart';
+import 'package:rx_notifier/rx_notifier.dart';
 
 import '../../core/consts/app_colors.dart';
 import '../../core/consts/app_icons.dart';
 import '../../core/extensions/build_context_ext.dart';
+import '../../core/injections/injections.dart';
 import '../../core/routes/create_account/routes.dart';
 import '../../core/routes/recover_password/routes.dart';
 import '../../services/navigator_service.dart';
@@ -21,13 +24,7 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-  bool obscureText = true;
-
-  void changeObscureText() {
-    setState(() {
-      obscureText = !obscureText;
-    });
-  }
+  final _authController = di.get<IAuthController>();
 
   void showBiometricConsent() {
     showDialog(
@@ -69,7 +66,9 @@ class _AuthPageState extends State<AuthPage> {
             width: double.maxFinite,
             height: 58,
             child: ElevatedButton.icon(
-              onPressed: showBiometricConsent,
+              onPressed: () async {
+                _authController.login();
+              },
               icon: EPIcon(
                 context.icon(OutlineIcons.arrowNarrowRight),
                 color: Colors.white,
@@ -107,55 +106,65 @@ class _AuthPageState extends State<AuthPage> {
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Form(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  verticalDivider12,
-                  verticalDivider12,
-                  const EPLabel('E-mail'),
-                  TextFormField(
-                    decoration:
-                        const InputDecoration(hintText: 'Insira seu e-mail'),
-                  ),
-                  verticalDivider12,
-                  const EPLabel('Senha'),
-                  TextFormField(
-                    obscureText: obscureText,
-                    decoration: InputDecoration(
-                      hintText: 'Insira sua senha',
-                      suffixIcon: Padding(
-                        padding: const EdgeInsets.only(right: 16),
-                        child: InkWell(
-                          onTap: changeObscureText,
-                          child: EPIcon(
-                            context.icon(
-                              obscureText
-                                  ? OutlineIcons.eye
-                                  : OutlineIcons.eyeOff,
+            child: RxBuilder(
+              builder: (_) => Form(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    verticalDivider12,
+                    verticalDivider12,
+                    const EPLabel('E-mail'),
+                    TextFormField(
+                      controller: _authController.emailController,
+                      decoration:
+                          const InputDecoration(hintText: 'Insira seu e-mail'),
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
+                    ),
+                    verticalDivider12,
+                    const EPLabel('Senha'),
+                    TextFormField(
+                      controller: _authController.passwordController,
+                      obscureText: _authController.obscureText.value,
+                      decoration: InputDecoration(
+                        hintText: 'Insira sua senha',
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.only(right: 16),
+                          child: InkWell(
+                            onTap: _authController.changeObscureText,
+                            child: EPIcon(
+                              context.icon(
+                                _authController.obscureText.value
+                                    ? OutlineIcons.eye
+                                    : OutlineIcons.eyeOff,
+                              ),
+                              color: AppColors.c4F5159,
                             ),
-                            color: AppColors.c4F5159,
                           ),
                         ),
+                        suffixIconConstraints: BoxConstraints.tight(
+                          const Size(40.0, 24.0),
+                        ),
                       ),
-                      suffixIconConstraints: BoxConstraints.tight(
-                        const Size(40.0, 24.0),
-                      ),
-                    ),
-                  ),
-                  verticalDivider12,
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () {
-                        context.push(RecoverPasswordRoutes.recoverPassword);
+                      textInputAction: TextInputAction.go,
+                      onFieldSubmitted: (_) async {
+                        await _authController.login();
                       },
-                      child: const Text('Esqueceu sua senha?'),
                     ),
-                  ),
-                  verticalDivider12,
-                  verticalDivider12,
-                ],
+                    verticalDivider12,
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () {
+                          context.push(RecoverPasswordRoutes.recoverPassword);
+                        },
+                        child: const Text('Esqueceu sua senha?'),
+                      ),
+                    ),
+                    verticalDivider12,
+                    verticalDivider12,
+                  ],
+                ),
               ),
             ),
           ),

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'auth/routes.dart';
 import 'change_password/routes.dart';
 import 'create_account/routes.dart';
+import 'home/routes.dart';
 import 'onboarding/routes.dart';
 import 'recover_password/routes.dart';
 
@@ -12,6 +13,7 @@ class Routes {
         ...AuthRoutes.routes,
         ...RecoverPasswordRoutes.routes,
         ...ChangePasswordRoutes.routes,
-        ...CreateAccountRoutes.routes
+        ...CreateAccountRoutes.routes,
+        ...HomeRoutes.routes,
       ];
 }

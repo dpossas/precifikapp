@@ -21,6 +21,7 @@
             "request": "launch",
             "type": "dart",
             "program": "lib/",
+            // "flutterMode": "release",
             "args": [
                 "-t",
                 "lib/main_prod.dart",

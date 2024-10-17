@@ -1,9 +1,12 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:precificapp/controller/recover_password_controller.dart';
+import 'package:rx_notifier/rx_notifier.dart';
 
 import '../../core/consts/app_colors.dart';
 import '../../core/consts/app_icons.dart';
 import '../../core/extensions/build_context_ext.dart';
+import '../../core/injections/injections.dart';
 import '../../services/navigator_service.dart';
 import '../components/ep_blur_modal.dart';
 import '../components/ep_icon.dart';
@@ -19,8 +22,7 @@ class RecoverPasswordPage extends StatefulWidget {
 }
 
 class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
-  final _emailController = TextEditingController();
-  bool emailIsValid = false;
+  final _recoverPasswordController = di.get<IRecoverPasswordController>();
 
   void showSuccessEmailSent() {
     showDialog(
@@ -61,14 +63,20 @@ class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
           SizedBox(
             width: double.maxFinite,
             height: 58,
-            child: ElevatedButton.icon(
-              onPressed: !emailIsValid ? null : showSuccessEmailSent,
-              icon: EPIcon(
-                context.icon(OutlineIcons.arrowNarrowRight),
-                color: Colors.white,
+            child: RxBuilder(
+              builder: (_) => ElevatedButton.icon(
+                onPressed: _recoverPasswordController.formIsValid.value
+                    ? () async {
+                        await _recoverPasswordController.sendEmail();
+                      }
+                    : null,
+                icon: EPIcon(
+                  context.icon(OutlineIcons.arrowNarrowRight),
+                  color: Colors.white,
+                ),
+                iconAlignment: IconAlignment.end,
+                label: const Text('Recuperar'),
               ),
-              iconAlignment: IconAlignment.end,
-              label: const Text('Recuperar'),
             ),
           ),
         ],
@@ -85,11 +93,15 @@ class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
                   TextFormField(
                     decoration:
                         const InputDecoration(hintText: 'Insira seu e-mail'),
-                    controller: _emailController,
-                    onChanged: (value) {
-                      setState(() {
-                        emailIsValid = EmailValidator.validate(value);
-                      });
+                    controller: _recoverPasswordController.emailController,
+                    validator: _recoverPasswordController.emailIsValid,
+                    onChanged: _recoverPasswordController.validateEmail,
+                    keyboardType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.go,
+                    onFieldSubmitted: (email) async {
+                      if (_recoverPasswordController.validateEmail(email)) {
+                        await _recoverPasswordController.sendEmail();
+                      }
                     },
                   ),
                 ],
