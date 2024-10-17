@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/consts/app_colors.dart';
 import '../../core/consts/app_icons.dart';
 import '../../core/extensions/build_context_ext.dart';
-import '../../core/routes/change_password/routes.dart';
+import '../../services/navigator_service.dart';
 import '../components/ep_icon.dart';
 
 class EmailSentSuccess extends StatelessWidget {
@@ -14,7 +14,7 @@ class EmailSentSuccess extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(24),
-      height: 330,
+      height: 350,
       child: Column(
         children: [
           EPIcon(
@@ -50,7 +50,7 @@ class EmailSentSuccess extends StatelessWidget {
             height: 58,
             child: ElevatedButton(
               onPressed: () {
-                context.push(ChangePasswordRoutes.changePassword);
+                context.pop(NavigatorService.context);
               },
               child: const Text('Ok'),
             ),

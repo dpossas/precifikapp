@@ -1,8 +1,7 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:precificapp/controller/recover_password_controller.dart';
 import 'package:rx_notifier/rx_notifier.dart';
 
+import '../../controller/recover_password_controller.dart';
 import '../../core/consts/app_colors.dart';
 import '../../core/consts/app_icons.dart';
 import '../../core/extensions/build_context_ext.dart';
@@ -67,7 +66,9 @@ class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
               builder: (_) => ElevatedButton.icon(
                 onPressed: _recoverPasswordController.formIsValid.value
                     ? () async {
-                        await _recoverPasswordController.sendEmail();
+                        await _recoverPasswordController.sendEmail().then((_) {
+                          showSuccessEmailSent();
+                        });
                       }
                     : null,
                 icon: EPIcon(

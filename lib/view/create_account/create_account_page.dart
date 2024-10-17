@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:precificapp/view/create_account/pages/create_account_individual_page.dart';
 
 import 'components/create_account_app_bar.dart';
-import 'pages/create_account_company_page.dart';
+import 'pages/create_account_individual_page.dart';
 
 class CreateAccountPage extends StatefulWidget {
   const CreateAccountPage({super.key});
@@ -23,8 +22,8 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
             children: [
               verticalDivider12,
               verticalDivider12,
-              // const CreateAccountIndividualPage(),
-              const CreateAccountCompanyPage(),
+              const CreateAccountIndividualPage(),
+              // const CreateAccountCompanyPage(),
             ],
           ),
         ),
