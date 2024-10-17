@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:precificapp/controller/auth_controller.dart';
+import '../../controller/auth_controller.dart';
+import 'components/invalid_credentials_modal.dart';
 import 'package:rx_notifier/rx_notifier.dart';
 
 import '../../core/consts/app_colors.dart';
@@ -13,7 +14,7 @@ import '../../services/navigator_service.dart';
 import '../components/ep_blur_modal.dart';
 import '../components/ep_icon.dart';
 import '../components/ep_label.dart';
-import 'biometric_permission.dart';
+import 'components/biometric_permission.dart';
 import 'components/ep_app_bar.dart';
 
 class AuthPage extends StatefulWidget {
@@ -36,6 +37,16 @@ class _AuthPageState extends State<AuthPage> {
     );
   }
 
+  void showInvalidCredentialsError() {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) => const EPBlurModal(
+        child: InvalidCredentialsModal(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Theme(
@@ -47,56 +58,72 @@ class _AuthPageState extends State<AuthPage> {
       child: Scaffold(
         appBar: const EpAppBar(),
         persistentFooterButtons: [
-          TextButton(
-            onPressed: () {},
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                EPIcon(
-                  context.icon(OutlineIcons.annotation),
-                  color: AppColors.cF12838,
-                ),
-                horizontalDivider12,
-                const Text('Precisa de ajuda?'),
-              ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18),
+            child: TextButton(
+              onPressed: () {},
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  EPIcon(
+                    context.icon(OutlineIcons.annotation),
+                    color: AppColors.cF12838,
+                  ),
+                  horizontalDivider12,
+                  const Text('Precisa de ajuda?'),
+                ],
+              ),
             ),
           ),
           verticalDivider12,
-          SizedBox(
-            width: double.maxFinite,
-            height: 58,
-            child: ElevatedButton.icon(
-              onPressed: () async {
-                _authController.login();
-              },
-              icon: EPIcon(
-                context.icon(OutlineIcons.arrowNarrowRight),
-                color: Colors.white,
-              ),
-              iconAlignment: IconAlignment.end,
-              label: const Text('Entrar'),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18),
+            child: SizedBox(
+              width: double.maxFinite,
+              height: 58,
+              child: RxBuilder(builder: (context) {
+                return ElevatedButton.icon(
+                  onPressed: _authController.formIsValid.value
+                      ? () async {
+                          _authController.login().catchError((_) {
+                            showInvalidCredentialsError();
+                          });
+                        }
+                      : null,
+                  icon: EPIcon(
+                    context.icon(OutlineIcons.arrowNarrowRight),
+                    color: Colors.white,
+                  ),
+                  iconAlignment: IconAlignment.end,
+                  label: const Text('Entrar'),
+                );
+              }),
             ),
           ),
           verticalDivider12,
-          SizedBox(
-            width: double.maxFinite,
-            height: 58,
-            child: ElevatedButton.icon(
-              style: const ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(
-                  Colors.white,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18),
+            child: SizedBox(
+              width: double.maxFinite,
+              height: 58,
+              child: ElevatedButton.icon(
+                style: const ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(
+                    Colors.white,
+                  ),
                 ),
-              ),
-              onPressed: () => context.push(CreateAccountRoutes.createAccount),
-              icon: EPIcon(
-                context.icon(OutlineIcons.mail),
-                color: AppColors.primary250,
-              ),
-              iconAlignment: IconAlignment.end,
-              label: const Text(
-                'Criar uma nova conta',
-                style: TextStyle(
+                onPressed: () =>
+                    context.push(CreateAccountRoutes.createAccount),
+                icon: EPIcon(
+                  context.icon(OutlineIcons.mail),
                   color: AppColors.primary250,
+                ),
+                iconAlignment: IconAlignment.end,
+                label: const Text(
+                  'Criar uma nova conta',
+                  style: TextStyle(
+                    color: AppColors.primary250,
+                  ),
                 ),
               ),
             ),
@@ -120,6 +147,9 @@ class _AuthPageState extends State<AuthPage> {
                           const InputDecoration(hintText: 'Insira seu e-mail'),
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
+                      onChanged: (_) {
+                        _authController.validateForm();
+                      },
                     ),
                     verticalDivider12,
                     const EPLabel('Senha'),
@@ -148,7 +178,12 @@ class _AuthPageState extends State<AuthPage> {
                       ),
                       textInputAction: TextInputAction.go,
                       onFieldSubmitted: (_) async {
-                        await _authController.login();
+                        if (_authController.formIsValid.value) {
+                          await _authController.login();
+                        }
+                      },
+                      onChanged: (_) {
+                        _authController.validateForm();
                       },
                     ),
                     verticalDivider12,

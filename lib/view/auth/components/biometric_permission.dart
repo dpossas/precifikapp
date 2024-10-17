@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:precificapp/core/routes/auth/routes.dart';
 
-import '../../core/consts/app_colors.dart';
-import '../../core/consts/app_icons.dart';
-import '../../core/extensions/build_context_ext.dart';
-import '../../services/navigator_service.dart';
-import '../components/ep_icon.dart';
+import '../../../core/consts/app_colors.dart';
+import '../../../core/consts/app_icons.dart';
+import '../../../core/extensions/build_context_ext.dart';
+import '../../../services/navigator_service.dart';
+import '../../components/ep_icon.dart';
 
 class BiometricPermission extends StatelessWidget {
   const BiometricPermission({super.key});

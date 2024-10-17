@@ -70,7 +70,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   toLogin();
                 },
                 child: SizedBox(
-                  width: 60,
+                  width: 68,
                   height: 40,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

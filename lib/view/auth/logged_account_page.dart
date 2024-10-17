@@ -7,7 +7,7 @@ import '../../core/consts/app_icons.dart';
 import '../../core/extensions/build_context_ext.dart';
 import '../../services/navigator_service.dart';
 import '../components/ep_icon.dart';
-import 'biometric_permission.dart';
+import 'components/biometric_permission.dart';
 import 'components/ep_app_bar.dart';
 import 'components/logged_account_component.dart';
 

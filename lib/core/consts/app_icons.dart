@@ -26,6 +26,7 @@ class SolidIcons {
   static String arrowSmRight = 'solid/arrow_sm_right';
   static String home = 'solid/home';
   static String play = 'solid/play';
+  static String shieldExclamation = 'solid/shield_exclamation';
 }
 
 class AppIcons {
