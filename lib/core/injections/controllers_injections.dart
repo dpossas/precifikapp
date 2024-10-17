@@ -4,7 +4,10 @@ import 'injections.dart';
 
 class ControllersInjections {
   static setUp() {
-    di.registerLazySingleton<IAuthController>(() => AuthController(di.get()));
+    di.registerLazySingleton<IAuthController>(() => AuthController(
+          di.get(),
+          di.get(),
+        ));
     di.registerLazySingleton<IRecoverPasswordController>(
         () => RecoverPasswordController(di.get()));
   }

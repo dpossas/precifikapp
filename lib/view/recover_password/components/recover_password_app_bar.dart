@@ -10,86 +10,87 @@ class RecoverPasswordAppBar extends StatelessWidget implements PreferredSize {
   Widget build(BuildContext context) => child;
 
   @override
-  Widget get child => SafeArea(
-        child: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            Container(
-              width: double.maxFinite,
-              decoration: const BoxDecoration(
-                gradient: RadialGradient(
-                  center: Alignment.topLeft,
-                  radius: 3,
-                  colors: [
-                    Color(0xff81451C),
-                    Color(0xff50280C),
-                  ],
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 24),
-                        FittedBox(
-                          fit: BoxFit.cover,
-                          child: Text(
-                            'Problemas para entrar? 😥',
-                            style: Theme.of(NavigatorService.context)
-                                .textTheme
-                                .headlineLarge
-                                ?.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        Text(
-                          'Insira o seu email que enviaremos um link para você voltar a acessar sua conta',
-                          style: Theme.of(NavigatorService.context)
-                              .textTheme
-                              .bodyMedium
-                              ?.copyWith(
-                                color: Colors.white,
-                                height: 1.6,
-                              ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Spacer(),
-                  Container(
-                    decoration: const BoxDecoration(
-                      border: Border(
-                        top: BorderSide(
-                          width: 16.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
-                      ),
-                    ),
-                  )
+  Widget get child => Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          Container(
+            width: double.maxFinite,
+            decoration: const BoxDecoration(
+              gradient: RadialGradient(
+                center: Alignment.topLeft,
+                radius: 3,
+                colors: [
+                  Color(0xff81451C),
+                  Color(0xff50280C),
                 ],
               ),
             ),
-            Align(
-              widthFactor: 1,
-              heightFactor: 0.1,
-              child: Image.asset(
-                AppImages.breads,
-                scale: .2,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(NavigatorService.context).padding.top,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 24),
+                      FittedBox(
+                        fit: BoxFit.cover,
+                        child: Text(
+                          'Problemas para entrar? 😥',
+                          style: Theme.of(NavigatorService.context)
+                              .textTheme
+                              .headlineLarge
+                              ?.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        'Insira o seu email que enviaremos um link para você voltar a acessar sua conta',
+                        style: Theme.of(NavigatorService.context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(
+                              color: Colors.white,
+                              height: 1.6,
+                            ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Spacer(),
+                Container(
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      top: BorderSide(
+                        width: 16.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                )
+              ],
             ),
-          ],
-        ),
+          ),
+          Align(
+            widthFactor: 1,
+            heightFactor: 0.1,
+            child: Image.asset(
+              AppImages.breads,
+              scale: .2,
+            ),
+          ),
+        ],
       );
 
   @override

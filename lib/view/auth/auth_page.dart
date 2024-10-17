@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../controller/auth_controller.dart';
-import 'components/invalid_credentials_modal.dart';
 import 'package:rx_notifier/rx_notifier.dart';
 
+import '../../controller/auth_controller.dart';
 import '../../core/consts/app_colors.dart';
 import '../../core/consts/app_icons.dart';
 import '../../core/extensions/build_context_ext.dart';
 import '../../core/injections/injections.dart';
 import '../../core/routes/create_account/routes.dart';
+import '../../core/routes/home/routes.dart';
 import '../../core/routes/recover_password/routes.dart';
 import '../../services/navigator_service.dart';
 import '../components/ep_blur_modal.dart';
@@ -16,6 +16,7 @@ import '../components/ep_icon.dart';
 import '../components/ep_label.dart';
 import 'components/biometric_permission.dart';
 import 'components/ep_app_bar.dart';
+import 'components/invalid_credentials_modal.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -45,6 +46,18 @@ class _AuthPageState extends State<AuthPage> {
         child: InvalidCredentialsModal(),
       ),
     );
+  }
+
+  void toHomePage() {
+    context.go(HomeRoutes.home);
+  }
+
+  Future<void> login() async {
+    _authController.login().catchError((_) {
+      showInvalidCredentialsError();
+    }).then((_) {
+      toHomePage();
+    });
   }
 
   @override
@@ -83,13 +96,7 @@ class _AuthPageState extends State<AuthPage> {
               height: 58,
               child: RxBuilder(builder: (context) {
                 return ElevatedButton.icon(
-                  onPressed: _authController.formIsValid.value
-                      ? () async {
-                          _authController.login().catchError((_) {
-                            showInvalidCredentialsError();
-                          });
-                        }
-                      : null,
+                  onPressed: _authController.formIsValid.value ? login : null,
                   icon: EPIcon(
                     context.icon(OutlineIcons.arrowNarrowRight),
                     color: Colors.white,
@@ -179,7 +186,7 @@ class _AuthPageState extends State<AuthPage> {
                       textInputAction: TextInputAction.go,
                       onFieldSubmitted: (_) async {
                         if (_authController.formIsValid.value) {
-                          await _authController.login();
+                          login();
                         }
                       },
                       onChanged: (_) {

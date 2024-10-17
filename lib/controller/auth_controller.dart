@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:rx_notifier/rx_notifier.dart';
 
 import '../repository/auth_repository.dart';
+import '../services/secure_storage_service.dart';
 
 abstract class IAuthController {
   late RxNotifier<bool> formIsValid;
@@ -20,6 +21,7 @@ abstract class IAuthController {
 
 class AuthController implements IAuthController {
   final IAuthRepository repository;
+  final ISecureStorageService localStorage;
 
   @override
   TextEditingController emailController = TextEditingController();
@@ -30,7 +32,10 @@ class AuthController implements IAuthController {
   @override
   TextEditingController passwordController = TextEditingController();
 
-  AuthController(this.repository);
+  AuthController(
+    this.repository,
+    this.localStorage,
+  );
 
   @override
   RxNotifier<bool> formIsValid = RxNotifier(false);
@@ -48,6 +53,10 @@ class AuthController implements IAuthController {
 
   @override
   Future<void> login() async {
-    await repository.doLogin(emailController.text, passwordController.text);
+    final user =
+        await repository.doLogin(emailController.text, passwordController.text);
+    if (user != null) {
+      localStorage.saveUser(user);
+    }
   }
 }

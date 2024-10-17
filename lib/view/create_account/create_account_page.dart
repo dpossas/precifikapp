@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../services/navigator_service.dart';
 import 'components/create_account_app_bar.dart';
 import 'pages/create_account_individual_page.dart';
 
@@ -24,6 +25,9 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
               verticalDivider12,
               const CreateAccountIndividualPage(),
               // const CreateAccountCompanyPage(),
+              SizedBox(
+                height: MediaQuery.of(NavigatorService.context).padding.bottom,
+              ),
             ],
           ),
         ),
