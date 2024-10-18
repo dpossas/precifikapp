@@ -84,7 +84,7 @@ class DioClient implements IDioClient {
     final baseOptions = BaseOptions(
       baseUrl: F.baseUrl,
       headers: {
-        'User-Agent': 'precifikapp/${F.appVersion}',
+        'User-Agent': 'precifikapp-flutter/${F.appVersion}',
       },
       persistentConnection: false,
       followRedirects: false,

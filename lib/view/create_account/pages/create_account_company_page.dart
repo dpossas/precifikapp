@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:precificapp/core/consts/app_icons.dart';
-import 'package:precificapp/core/extensions/build_context_ext.dart';
-import 'package:precificapp/core/routes/auth/routes.dart';
-import 'package:precificapp/core/validators/password_validator.dart';
-import 'package:precificapp/view/components/ep_icon.dart';
-import 'package:precificapp/view/components/ep_label.dart';
-import 'package:precificapp/view/components/password_form.dart';
-import 'package:precificapp/view/create_account/components/policy_terms.dart';
 
 import '../../../core/consts/app_colors.dart';
+import '../../../core/consts/app_icons.dart';
+import '../../../core/extensions/build_context_ext.dart';
+import '../../../core/routes/auth/routes.dart';
+import '../../../core/validators/password_validator.dart';
+import '../../components/ep_icon.dart';
+import '../../components/ep_label.dart';
+import '../../components/password_form.dart';
+import '../components/policy_terms.dart';
 
 class CreateAccountCompanyPage extends StatefulWidget {
   const CreateAccountCompanyPage({super.key});
@@ -137,7 +137,10 @@ class _CreateAccountCompanyPageState extends State<CreateAccountCompanyPage> {
             },
           ),
           verticalDivider12,
-          const PolicyTerms(),
+          PolicyTerms(
+            selected: false,
+            onChanged: (_) {},
+          ),
           verticalDivider40,
           SizedBox(
             width: double.maxFinite,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:precificapp/core/injections/injections.dart';
 import 'package:precificapp/services/secure_storage_service.dart';
 
+import '../../flavors.dart';
 import '../../models/user.dart';
 
 class HomePage extends StatefulWidget {
@@ -42,14 +43,16 @@ class _HomePageState extends State<HomePage> {
         : Scaffold(
             extendBodyBehindAppBar: true,
             appBar: AppBar(
-              leading: const Center(
+              leading: Center(
                 child: CircleAvatar(
                   backgroundColor: Colors.white,
                   radius: 20,
                   child: CircleAvatar(
                     radius: 18,
                     foregroundImage: NetworkImage(
-                      'https://yt3.googleusercontent.com/jarJThMuH7UxfKq67Q1LWFgpkrGbXmWTNsxAsprV-8YGHQUsNqiBPBD3WpmirLkWbi_BbwkDuA=s900-c-k-c0x00ffffff-no-rj',
+                      user?.avatar != null
+                          ? '${F.baseUrl}${user?.avatar?.substring(1)}'
+                          : 'https://yt3.googleusercontent.com/jarJThMuH7UxfKq67Q1LWFgpkrGbXmWTNsxAsprV-8YGHQUsNqiBPBD3WpmirLkWbi_BbwkDuA=s900-c-k-c0x00ffffff-no-rj',
                     ),
                   ),
                 ),

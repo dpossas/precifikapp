@@ -17,6 +17,8 @@ class User {
   bool student;
   bool? enabledMFA;
   int? customerId;
+  String? avatar;
+  String? logo;
 
   User({
     this.id,
@@ -35,6 +37,8 @@ class User {
     required this.student,
     this.enabledMFA = false,
     this.customerId,
+    this.avatar,
+    this.logo,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -59,6 +63,8 @@ class User {
         student: json['Student'],
         enabledMFA: json['EnabledMFA'],
         customerId: json['CustomerID'],
+        avatar: json['AvatarPic'],
+        logo: json['CompanyLogoPic'],
       );
     } on Exception catch (e, s) {
       FirebaseCrashlytics.instance.recordError(e, s, information: [json]);
@@ -83,6 +89,8 @@ class User {
     data['Member'] = member;
     data['Student'] = student;
     data['EnabledMFA'] = enabledMFA;
+    data['AvatarPic'] = avatar;
+    data['CompanyLogoPic'] = logo;
     return data;
   }
 }

@@ -43,7 +43,7 @@ class AuthController implements IAuthController {
   @override
   void validateForm() {
     formIsValid.value = EmailValidator.validate(emailController.text) &&
-        passwordController.text.length >= 4;
+        passwordController.text.length >= 8;
   }
 
   @override
@@ -56,7 +56,7 @@ class AuthController implements IAuthController {
     final user =
         await repository.doLogin(emailController.text, passwordController.text);
     if (user != null) {
-      localStorage.saveUser(user);
+      await localStorage.saveUser(user);
     }
   }
 }

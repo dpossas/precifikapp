@@ -5,7 +5,14 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../core/consts/app_colors.dart';
 
 class PolicyTerms extends StatefulWidget {
-  const PolicyTerms({super.key});
+  final bool selected;
+  final Function(bool?)? onChanged;
+
+  const PolicyTerms({
+    super.key,
+    required this.selected,
+    required this.onChanged,
+  });
 
   @override
   State<PolicyTerms> createState() => _PolicyTermsState();
@@ -23,17 +30,25 @@ class _PolicyTermsState extends State<PolicyTerms> {
     };
 
   @override
+  void initState() {
+    selected = widget.selected;
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Checkbox(
-            value: selected,
-            onChanged: (value) {
-              setState(() {
-                selected = value == true;
-              });
-            }),
+          value: selected,
+          onChanged: (value) {
+            selected = value == true;
+            widget.onChanged!(value);
+            setState(() {});
+          },
+        ),
         Expanded(
           child: Text.rich(
             TextSpan(

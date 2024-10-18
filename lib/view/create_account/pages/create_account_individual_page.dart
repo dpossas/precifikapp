@@ -1,15 +1,26 @@
+import 'dart:io';
+
+import 'package:cpf_cnpj_validator/cpf_validator.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:precificapp/core/consts/app_icons.dart';
-import 'package:precificapp/core/extensions/build_context_ext.dart';
-import 'package:precificapp/core/validators/password_validator.dart';
-import 'package:precificapp/view/components/ep_icon.dart';
-import 'package:precificapp/view/components/ep_label.dart';
-import 'package:precificapp/view/components/password_form.dart';
-import 'package:precificapp/view/create_account/components/policy_terms.dart';
+import 'package:rx_notifier/rx_notifier.dart';
 
+import '../../../controller/create_account_controller.dart';
 import '../../../core/consts/app_colors.dart';
+import '../../../core/consts/app_icons.dart';
+import '../../../core/extensions/build_context_ext.dart';
+import '../../../core/injections/injections.dart';
 import '../../../core/routes/auth/routes.dart';
+import '../../../core/validators/fullname_validator.dart';
+import '../../../core/validators/password_validator.dart';
+import '../../../core/validators/phone_validator.dart';
+import '../../components/ep_blur_modal.dart';
+import '../../components/ep_icon.dart';
+import '../../components/ep_label.dart';
+import '../../components/password_form.dart';
+import '../components/create_account_error_modal.dart';
+import '../components/policy_terms.dart';
 
 class CreateAccountIndividualPage extends StatefulWidget {
   const CreateAccountIndividualPage({super.key});
@@ -21,16 +32,31 @@ class CreateAccountIndividualPage extends StatefulWidget {
 
 class _CreateAccountIndividualPageState
     extends State<CreateAccountIndividualPage> {
-  final _fullnameController = TextEditingController();
-  final _documentController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _phoneController = TextEditingController();
-  final _sectorController = TextEditingController();
-
-  final _passwordController = TextEditingController();
-  final _passwordConfirmationController = TextEditingController();
+  final _createAccountController = di.get<ICreateAccountController>();
 
   final _passwordValidator = PasswordValidator();
+
+  void showCreateAccountError() {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) => const EPBlurModal(
+        child: CreateAccountErrorModal(),
+      ),
+    );
+  }
+
+  Future<void> createAccount() async {
+    _createAccountController.createIndividualAccount().catchError((_) {
+      showCreateAccountError();
+    }).then((_) {
+      toLoginPage();
+    });
+  }
+
+  void toLoginPage() {
+    context.go(AuthRoutes.auth);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +67,20 @@ class _CreateAccountIndividualPageState
           Center(
             child: Column(
               children: [
-                const SizedBox(
+                SizedBox(
                   width: 110,
                   height: 110,
-                  child: CircleAvatar(),
+                  child: RxBuilder(builder: (_) {
+                    return CircleAvatar(
+                      foregroundImage:
+                          _createAccountController.profileImage.value != null
+                              ? Image.file(
+                                  File(_createAccountController
+                                      .profileImage.value!.path),
+                                ).image
+                              : null,
+                    );
+                  }),
                 ),
                 verticalDivider12,
                 TextButton.icon(
@@ -52,7 +88,7 @@ class _CreateAccountIndividualPageState
                     context.icon(OutlineIcons.pencilAlt),
                     color: AppColors.c5961FF,
                   ),
-                  onPressed: () {},
+                  onPressed: _createAccountController.selectProfileImage,
                   label: const Text(
                     'Adicionar foto',
                     style: TextStyle(color: AppColors.c5961FF),
@@ -64,61 +100,116 @@ class _CreateAccountIndividualPageState
           verticalDivider12,
           const EPLabel('Nome completo'),
           TextFormField(
-            controller: _fullnameController,
+            controller: _createAccountController.fullnameController,
+            textInputAction: TextInputAction.next,
+            keyboardType: TextInputType.name,
+            autofillHints: const [AutofillHints.name],
+            validator: FullnameValidator.validate,
             decoration: const InputDecoration(
               hintText: 'Seu nome completo',
             ),
+            onChanged: (_) => _createAccountController.validateForm(),
           ),
           verticalDivider12,
           const EPLabel('CPF'),
           TextFormField(
-            controller: _documentController,
+            controller: _createAccountController.documentController,
+            textInputAction: TextInputAction.next,
+            validator: (cpf) {
+              if (!CPFValidator.isValid(cpf)) {
+                return 'CPF inválido';
+              }
+
+              return null;
+            },
             decoration: const InputDecoration(
               hintText: 'Seu CPF',
             ),
+            onChanged: (_) => _createAccountController.validateForm(),
           ),
           verticalDivider12,
           const EPLabel('E-mail'),
           TextFormField(
-            controller: _emailController,
+            controller: _createAccountController.emailController,
+            textInputAction: TextInputAction.next,
+            keyboardType: TextInputType.emailAddress,
+            autofillHints: const [AutofillHints.email],
+            validator: (email) {
+              if (!EmailValidator.validate(email ?? '')) {
+                return 'E-mail inválido';
+              }
+
+              return null;
+            },
             decoration: const InputDecoration(
               hintText: 'exemplo@gmail.com',
             ),
+            onChanged: (_) => _createAccountController.validateForm(),
           ),
           verticalDivider12,
           const EPLabel('Telefone'),
           TextFormField(
-            controller: _phoneController,
+            controller: _createAccountController.phoneController,
+            textInputAction: TextInputAction.next,
+            keyboardType: TextInputType.phone,
+            autofillHints: const [AutofillHints.telephoneNumber],
+            validator: PhoneValidator.validate,
             decoration: const InputDecoration(
               hintText: 'Seu telefone com DDD',
             ),
+            onChanged: (_) => _createAccountController.validateForm(),
           ),
           verticalDivider12,
           const EPLabel('Ramo'),
           TextFormField(
-            controller: _sectorController,
+            controller: _createAccountController.sectorController,
+            textInputAction: TextInputAction.next,
+            validator: (sector) {
+              if (sector == null || sector.trim().length < 5) {
+                return 'Setor inválido';
+              }
+
+              return null;
+            },
             decoration: const InputDecoration(
               hintText: 'Ex: Confeiteira',
             ),
+            onChanged: (_) => _createAccountController.validateForm(),
           ),
           verticalDivider12,
           PasswordForm(
-            passwordController: _passwordController,
-            passwordConfirmationController: _passwordConfirmationController,
+            passwordController: _createAccountController.passwordController,
+            passwordConfirmationController:
+                _createAccountController.passwordConfirmationController,
             passwordValidator: _passwordValidator,
             onValidate: () {
+              _createAccountController.validateForm();
               setState(() {});
             },
           ),
           verticalDivider12,
-          const PolicyTerms(),
+          RxBuilder(
+            builder: (_) {
+              return PolicyTerms(
+                selected: _createAccountController.agreeTerms.value,
+                onChanged: (value) {
+                  _createAccountController.agreeTerms.value = value == true;
+                  _createAccountController.validateForm();
+                },
+              );
+            },
+          ),
           verticalDivider40,
           SizedBox(
             width: double.maxFinite,
             height: 58,
-            child: ElevatedButton(
-              onPressed: () {},
-              child: const Text('Cadastrar'),
+            child: RxBuilder(
+              builder: (_) => ElevatedButton(
+                onPressed: _createAccountController.formIsValid.value
+                    ? createAccount
+                    : null,
+                child: const Text('Cadastrar'),
+              ),
             ),
           ),
           verticalDivider12,
