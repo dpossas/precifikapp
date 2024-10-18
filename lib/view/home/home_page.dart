@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:precificapp/core/injections/injections.dart';
-import 'package:precificapp/services/secure_storage_service.dart';
 
+import '../../core/injections/injections.dart';
 import '../../flavors.dart';
 import '../../models/user.dart';
+import '../../services/secure_storage_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

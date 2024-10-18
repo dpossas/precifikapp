@@ -4,10 +4,11 @@ import 'package:cpf_cnpj_validator/cpf_validator.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:precificapp/core/validators/fullname_validator.dart';
-import 'package:precificapp/core/validators/phone_validator.dart';
-import 'package:precificapp/repository/create_account_repository.dart';
 import 'package:rx_notifier/rx_notifier.dart';
+
+import '../core/validators/fullname_validator.dart';
+import '../core/validators/phone_validator.dart';
+import '../repository/create_account_repository.dart';
 
 abstract class ICreateAccountController {
   late RxNotifier<XFile?> profileImage;

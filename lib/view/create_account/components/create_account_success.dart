@@ -4,36 +4,28 @@ import 'package:go_router/go_router.dart';
 import '../../../core/consts/app_colors.dart';
 import '../../../core/consts/app_icons.dart';
 import '../../../core/extensions/build_context_ext.dart';
-import '../../../services/navigator_service.dart';
+import '../../../core/routes/auth/routes.dart';
 import '../../components/ep_icon.dart';
 
-class CreateAccountErrorModal extends StatelessWidget {
-  final String? title;
-  final String? message;
-
-  const CreateAccountErrorModal({
-    super.key,
-    this.title,
-    this.message,
-  });
+class CreateAccountSuccess extends StatelessWidget {
+  const CreateAccountSuccess({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(24),
-      height: 340,
+      height: 350,
       child: Column(
         children: [
           EPIcon(
-            context.icon(SolidIcons.shieldExclamation),
+            context.icon(OutlineIcons.badgeCheck),
             width: 58,
             height: 58,
-            color: AppColors.cF12838,
           ),
           verticalDivider12,
           verticalDivider12,
           Text(
-            title ?? 'Ocorreu um erro!',
+            'Conta criada com sucesso!',
             style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                   color: AppColors.c23262F,
                   fontWeight: FontWeight.w600,
@@ -42,8 +34,7 @@ class CreateAccountErrorModal extends StatelessWidget {
           ),
           verticalDivider12,
           Text(
-            message ??
-                'Não foi possível criar sua conta no momento. Tente novamente mais tarde ou entre em contato com o suporte.',
+            'Efetue o login com seus dados para ter acesso a plataforma',
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: AppColors.c4F5159,
                   fontWeight: FontWeight.normal,
@@ -58,20 +49,10 @@ class CreateAccountErrorModal extends StatelessWidget {
             width: double.maxFinite,
             height: 58,
             child: ElevatedButton(
-              style: const ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(
-                  Colors.white,
-                ),
-              ),
               onPressed: () {
-                context.pop(NavigatorService.context);
+                context.go(AuthRoutes.auth);
               },
-              child: const Text(
-                'Voltar',
-                style: TextStyle(
-                  color: AppColors.primary250,
-                ),
-              ),
+              child: const Text('Ok'),
             ),
           ),
         ],

@@ -9,8 +9,11 @@ import 'package:rx_notifier/rx_notifier.dart';
 import '../../../controller/create_account_controller.dart';
 import '../../../core/consts/app_colors.dart';
 import '../../../core/consts/app_icons.dart';
+import '../../../core/exceptions/data_already_used_exception.dart';
 import '../../../core/extensions/build_context_ext.dart';
 import '../../../core/injections/injections.dart';
+import '../../../core/masks/cpf_mask_formatter.dart';
+import '../../../core/masks/phone_mask_formatter.dart';
 import '../../../core/routes/auth/routes.dart';
 import '../../../core/validators/fullname_validator.dart';
 import '../../../core/validators/password_validator.dart';
@@ -20,6 +23,7 @@ import '../../components/ep_icon.dart';
 import '../../components/ep_label.dart';
 import '../../components/password_form.dart';
 import '../components/create_account_error_modal.dart';
+import '../components/create_account_success.dart';
 import '../components/policy_terms.dart';
 
 class CreateAccountIndividualPage extends StatefulWidget {
@@ -36,26 +40,37 @@ class _CreateAccountIndividualPageState
 
   final _passwordValidator = PasswordValidator();
 
-  void showCreateAccountError() {
+  void showCreateAccountError({String? title, String? message}) {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) => EPBlurModal(
+        child: CreateAccountErrorModal(
+          title: title,
+          message: message,
+        ),
+      ),
+    );
+  }
+
+  void showCreateAccountSuccess() {
     showDialog(
       barrierDismissible: false,
       context: context,
       builder: (context) => const EPBlurModal(
-        child: CreateAccountErrorModal(),
+        child: CreateAccountSuccess(),
       ),
     );
   }
 
   Future<void> createAccount() async {
-    _createAccountController.createIndividualAccount().catchError((_) {
-      showCreateAccountError();
-    }).then((_) {
-      toLoginPage();
-    });
-  }
+    _createAccountController.createIndividualAccount().then((_) {
+      showCreateAccountSuccess();
+    }).catchError((error) {
+      error as DataAlreadyUsedException;
 
-  void toLoginPage() {
-    context.go(AuthRoutes.auth);
+      showCreateAccountError(title: error.title, message: error.message);
+    }, test: (error) => error is DataAlreadyUsedException);
   }
 
   @override
@@ -115,6 +130,7 @@ class _CreateAccountIndividualPageState
           TextFormField(
             controller: _createAccountController.documentController,
             textInputAction: TextInputAction.next,
+            inputFormatters: [CPFMaskFormatter.mask],
             validator: (cpf) {
               if (!CPFValidator.isValid(cpf)) {
                 return 'CPF inválido';
@@ -154,6 +170,7 @@ class _CreateAccountIndividualPageState
             keyboardType: TextInputType.phone,
             autofillHints: const [AutofillHints.telephoneNumber],
             validator: PhoneValidator.validate,
+            inputFormatters: [PhoneMaskFormatter.mask],
             decoration: const InputDecoration(
               hintText: 'Seu telefone com DDD',
             ),

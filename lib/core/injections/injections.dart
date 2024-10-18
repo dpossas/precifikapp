@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:precificapp/services/secure_storage_service.dart';
 
+import '../../services/secure_storage_service.dart';
 import '../http/dio_client.dart';
 import 'controllers_injections.dart';
 import 'repositories_injections.dart';

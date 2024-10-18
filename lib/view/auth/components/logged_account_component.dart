@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:precificapp/core/extensions/build_context_ext.dart';
-import 'package:precificapp/core/routes/home/routes.dart';
-import 'package:precificapp/view/components/ep_icon.dart';
 
 import '../../../core/consts/app_colors.dart';
 import '../../../core/consts/app_icons.dart';
+import '../../../core/extensions/build_context_ext.dart';
+import '../../../core/routes/home/routes.dart';
 import '../../../services/navigator_service.dart';
+import '../../components/ep_icon.dart';
 
 class LoggedAccountComponent extends StatelessWidget {
   const LoggedAccountComponent({super.key});

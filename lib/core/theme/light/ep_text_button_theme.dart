@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:precificapp/core/consts/app_colors.dart';
+
+import '../../consts/app_colors.dart';
 
 class EpTextButtonTheme {
   static TextButtonThemeData get themeData => const TextButtonThemeData(

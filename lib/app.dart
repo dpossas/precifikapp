@@ -3,13 +3,13 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:precificapp/core/injections/injections.dart';
-import 'package:precificapp/services/navigator_service.dart';
 
+import 'core/injections/injections.dart';
 import 'core/routes/routes.dart';
 import 'core/theme/theme.dart';
 import 'firebase_options.dart';
 import 'flavors.dart';
+import 'services/navigator_service.dart';
 
 class App extends StatefulWidget {
   const App({super.key});

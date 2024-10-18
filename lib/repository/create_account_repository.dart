@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 
+import '../core/exceptions/data_already_used_exception.dart';
 import 'base_repository.dart';
 
 abstract class ICreateAccountRepository {
@@ -32,7 +33,7 @@ class CreateAccountRepository extends BaseRepository
     required bool agreeTerms,
     bool member = false,
   }) async {
-    await dio.post(
+    final response = await dio.post(
       'API/Customer',
       data: FormData.fromMap({
         'fullname': fullname,
@@ -54,5 +55,13 @@ class CreateAccountRepository extends BaseRepository
         'action': 'register',
       }),
     );
+
+    if (response.statusCode == 409) {
+      throw DataAlreadyUsedException(
+        title: 'Dados já cadastrados',
+        message:
+            'E-mail e/ou CPF já cadastrados. Caso não lembre da senha, tente recuperá-la.',
+      );
+    }
   }
 }
