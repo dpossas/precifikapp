@@ -53,10 +53,10 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   Future<void> login() async {
-    _authController.login().catchError((_) {
-      showInvalidCredentialsError();
-    }).then((_) {
+    await _authController.login().then((_) {
       toHomePage();
+    }).catchError((_) {
+      showInvalidCredentialsError();
     });
   }
 
@@ -186,7 +186,7 @@ class _AuthPageState extends State<AuthPage> {
                       textInputAction: TextInputAction.go,
                       onFieldSubmitted: (_) async {
                         if (_authController.formIsValid.value) {
-                          login();
+                          await login();
                         }
                       },
                       onChanged: (_) {

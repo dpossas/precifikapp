@@ -64,7 +64,7 @@ class _CreateAccountIndividualPageState
   }
 
   Future<void> createAccount() async {
-    _createAccountController.createIndividualAccount().then((_) {
+    await _createAccountController.createIndividualAccount().then((_) {
       showCreateAccountSuccess();
     }).catchError((error) {
       error as DataAlreadyUsedException;

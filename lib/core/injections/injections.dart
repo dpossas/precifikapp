@@ -9,8 +9,7 @@ final di = GetIt.instance;
 
 class Injections {
   static Future<void> setUp() async {
-    di.registerLazySingleton<ISecureStorageService>(
-        () => SecureStorageService());
+    di.registerLazySingleton<ISecureStorageService>(SecureStorageService.new);
 
     final dioClient = await DioClient.createDio(di.get());
     di.registerSingleton<IDioClient>(dioClient);

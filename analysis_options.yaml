@@ -7,3 +7,10 @@ linter:
     - avoid_multiple_declarations_per_line
     - prefer_relative_imports
     - prefer_single_quotes
+    - sized_box_for_whitespace
+    - sized_box_shrink_expand
+    - unawaited_futures
+    - unnecessary_lambdas
+    - use_key_in_widget_constructors
+    - use_named_constants
+    - use_raw_strings

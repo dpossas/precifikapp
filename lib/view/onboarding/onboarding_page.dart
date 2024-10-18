@@ -66,9 +66,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   elevation: 0,
                   foregroundColor: Colors.transparent,
                 ),
-                onPressed: () {
-                  toLogin();
-                },
+                onPressed: toLogin,
                 child: SizedBox(
                   width: 68,
                   height: 40,
@@ -128,9 +126,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             );
                           }
                         : _currentPage == 2
-                            ? () {
-                                toLogin();
-                              }
+                            ? toLogin
                             : null,
                   ),
                 ],
@@ -155,9 +151,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             ? const EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 20.0)
             : const EdgeInsets.fromLTRB(35.0, 10.0, 35.0, 32.0);
 
-        return SizedBox(
-          width: double.infinity,
-          height: double.infinity,
+        return SizedBox.expand(
           child: Stack(
             alignment: Alignment.center,
             children: [
@@ -270,9 +264,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
         final smallFontSize = width < 380 ? 12.0 : 14.0;
         const iconSize = 32.0;
 
-        return SizedBox(
-          width: double.infinity,
-          height: double.infinity,
+        return SizedBox.expand(
           child: Stack(
             alignment: Alignment.center,
             children: [
@@ -362,9 +354,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
         final smallFontSize = width < 380 ? 12.0 : 14.0;
         const iconSize = 32.0;
 
-        return SizedBox(
-          width: double.infinity,
-          height: double.infinity,
+        return SizedBox.expand(
           child: Stack(
             alignment: Alignment.center,
             children: [
